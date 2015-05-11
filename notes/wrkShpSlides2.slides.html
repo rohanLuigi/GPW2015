@@ -234,7 +234,7 @@ div.output_prompt {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Mean-and-variance-of-truncated-normal">Mean and variance of truncated normal<a class="anchor-link" href="#Mean-and-variance-of-truncated-normal">&#182;</a></h2><p>Suppose $Y \sim N(\mu_Y,V_Y)$.</p>
+<h2 id="Mean-and-Variance-of-Truncated-Normal">Mean and Variance of Truncated Normal<a class="anchor-link" href="#Mean-and-Variance-of-Truncated-Normal">&#182;</a></h2><p>Suppose $Y \sim N(\mu_Y,V_Y)$.</p>
 <p>The mean and variance of $Y$ given truncation
 selection are:</p>
 
@@ -273,11 +273,358 @@ Var(Y|Y>t) = V_Y[1 - i(i-s)]
 \end{equation}
 </div>
 </div>
+</div></section><section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Proof:">Proof:<a class="anchor-link" href="#Proof:">&#182;</a></h2><p>Start with  mean and variance for a standard normal variable given truncation selection.</p>
+<p>Let $Z \sim N(0,1)$.</p>
+<p>The density function of $Z$ is:
+$$
+f(z) = \sqrt{\frac{1}{2\pi}}e^{-\frac{1}{2}z^2}
+$$</p>
+<p>The density function for $Z$ given truncation selection is 
+$$
+f(z|z&gt;s) = f(z)/p
+$$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>From the definition of the mean:
+\begin{equation*}
+\begin{split}
+E(Z|Z&gt;s) &amp;= \frac{1}{p} \int_s^{\infty} z f(z)dz\
+          &amp;= \frac{1}{p} [-f(z) ] _s^{\infty} \
+          &amp;= \frac{f(s)}{p} \
+          &amp;= i
+\end{split}
+\end{equation*}</p>
+<p>because the first derivative of $f(z)$ with respect to $z$ is:
+\begin{equation*}
+\begin{split}
+\frac{d}{dz} f(z) &amp;= \sqrt{\frac{1}{2\pi} } e^{-\frac{1}{2}z^2} (-z)\
+                  &amp;= -zf(z)
+\end{split}
+\end{equation*}</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now, to compute the variance of $Z$ given selection, consider the following
+identity:
+\begin{equation*}
+\begin{split}
+\frac{d}{dz} z f(z) &amp;= f(z) + z \frac{d}{dz} f(z) \
+                    &amp;= f(z) - z^2 f(z) 
+\end{split}
+\end{equation*}</p>
+<p>Integrating both sides from $s$ to $\infty$ gives
+\begin{equation*}
+zf(z)]_s^\infty = \int_s^\infty  f(z) dz - \int_s^\infty z^2 f(z)dz
+\end{equation*}
+Upon rearranging this gives:
+\begin{equation*}
+\begin{split}
+            \int_s^\infty z^2 f(z)dz &amp;= \int_s^\infty  f(z) dz - zf(z)]_s^\infty \
+\frac{1}{p} \int_s^\infty z^2 f(z)dz &amp;= 
+          \frac{1}{p} \int_s^\infty  f(z) dz  + \frac{f(s)}{p}s\
+          &amp;= 1 + is
+\end{split}
+\end{equation*}</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So, 
+\begin{equation}
+  \begin{split}
+    Var(Z|Z&gt;s)  &amp;= E(Z^2|Z&gt;s) - [E(Z|Z&gt;s)]^2\
+                &amp;= 1 + is - i^2 \
+                &amp;= 1 - i(i-s)
+  \end{split}
+\end{equation}</p>
+
+</div>
+</div>
+</div></section><section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Results-for-$Y$">Results for $Y$<a class="anchor-link" href="#Results-for-$Y$">&#182;</a></h2><p>Results for $Y$ follow from the fact that 
+$$
+\mu_Y + V_Y^{1/2}Z \sim N(\mu_Y,V_Y)
+$$</p>
+<p>So, let 
+$$
+Y = \mu_Y + V_Y^{1/2}Z,
+$$
+Then, the condition
+$$
+Y&gt;t
+$$
+is equivalent to 
+\begin{equation*}
+  \begin{split}
+    \mu_Y + V_Y^{1/2}Z &amp;&gt; t \
+            V_Y^{1/2}Z &amp;&gt; t - \mu_Y \
+                     Z &amp;&gt; \frac{t - \mu_Y}{V_Y^{1/2}}\
+                     Z &amp;&gt; s
+  \end{split} 
+\end{equation*}</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Then, 
+\begin{equation*}
+  \begin{split}
+    E(Y|Y&gt;t) &amp;= E(\mu_Y + V_Y^{1/2}Z |Z&gt;s) \
+             &amp;= \mu_Y + V_Y^{1/2}i,
+  \end{split}
+\end{equation*}
+and
+\begin{equation*}
+  \begin{split} 
+    Var(Y|Y&gt;t) &amp;=  Var(\mu_Y + V_Y^{1/2}Z |Z&gt;s) \
+                &amp;= V_Y[1 - i(i-s)]
+  \end{split}
+\end{equation*}</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Numerical-Example">Numerical Example<a class="anchor-link" href="#Numerical-Example">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[39]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span class="err">μ</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="err">σ</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">t</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span><span class="o">-</span><span class="err">μ</span><span class="p">)</span><span class="o">/</span><span class="err">σ</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">Normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">i</span> <span class="o">=</span> <span class="n">pdf</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="n">s</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">cdf</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="n">s</span><span class="p">))</span>
+<span class="n">meanTruncatedNormal</span> <span class="o">=</span> <span class="err">μ</span> <span class="o">+</span> <span class="err">σ</span><span class="o">*</span><span class="n">i</span>
+<span class="n">variTruncatedNormal</span> <span class="o">=</span> <span class="err">σ</span><span class="o">*</span><span class="err">σ</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">i</span><span class="o">*</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="n">s</span><span class="p">))</span>
+<span class="p">@</span><span class="n">printf</span> <span class="s">&quot;mean     = %8.2f  </span><span class="se">\n</span><span class="s">&quot;</span> <span class="n">meanTruncatedNormal</span>
+<span class="p">@</span><span class="n">printf</span> <span class="s">&quot;variance = %8.2f  </span><span class="se">\n</span><span class="s">&quot;</span> <span class="n">variTruncatedNormal</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>mean     =    21.41  
+variance =    26.85  
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Monte-Carlo-Approach:">Monte-Carlo Approach:<a class="anchor-link" href="#Monte-Carlo-Approach:">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[43]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span class="k">using</span> <span class="n">Distributions</span>
+<span class="err">μ</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="err">σ</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="err">μ</span><span class="p">,</span><span class="err">σ</span><span class="p">),</span><span class="mi">10000</span><span class="p">);</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span class="n">mcmcMean</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="n">z</span><span class="o">.&gt;</span><span class="n">t</span><span class="p">])</span>
+<span class="n">mcmcVar</span> <span class="o">=</span> <span class="n">var</span><span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="n">z</span><span class="o">.&gt;</span><span class="n">t</span><span class="p">])</span>
+<span class="p">@</span><span class="n">printf</span> <span class="s">&quot;MCMC mean     = %8.2f  </span><span class="se">\n</span><span class="s">&quot;</span> <span class="n">mcmcMean</span>
+<span class="p">@</span><span class="n">printf</span> <span class="s">&quot;MCMC variance = %8.2f  </span><span class="se">\n</span><span class="s">&quot;</span> <span class="n">mcmcVar</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>MCMC mean     =    21.39  
+MCMC variance =    26.81  
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Bivariate-Normal-Example">Bivariate Normal Example<a class="anchor-link" href="#Bivariate-Normal-Example">&#182;</a></h2><p>Let $\mathbf(Y) \sim N(\mathbf{\mu},\mathbf{V})$</p>
+<p>$
+\mathbf{\mu} = 
+\begin{bmatrix}
+10\
+20
+\end{bmatrix},
+$
+$
+\mathbf{V} = 
+\begin{bmatrix}
+100 &amp; 50\
+50  &amp; 200
+\end{bmatrix}
+$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[54]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span class="err">μ</span> <span class="o">=</span> <span class="p">[</span><span class="mf">10.0</span><span class="p">;</span><span class="mf">20.0</span><span class="p">]</span>
+<span class="n">V</span> <span class="o">=</span> <span class="p">[</span><span class="mf">100.0</span> <span class="mf">50.0</span>
+    <span class="mf">50.0</span>  <span class="mf">200.0</span><span class="p">]</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">MvNormal</span><span class="p">(</span><span class="err">μ</span><span class="p">,</span><span class="n">V</span><span class="p">)</span>
+<span class="n">XY</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="mi">10000</span><span class="p">)</span><span class="o">&#39;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[54]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>10000x2 Array{Float64,2}:
+ 10.3117    41.2371 
+  8.49604   30.121  
+  1.49591    5.04669
+  2.0137    21.2858 
+  8.12043    9.99512
+ 17.9018    16.9568 
+  1.01726   20.0321 
+ -8.29162   40.2454 
+ 14.6496    45.1535 
+ 13.9381    12.9118 
+ -0.612875  24.1609 
+ 20.5875    15.1366 
+ 16.2409    25.9275 
+  ⋮                 
+  3.98896    3.67185
+ 13.8927    24.0219 
+  3.93784   11.8521 
+  3.83364    4.41762
+ 20.7947    37.1139 
+  9.11036   15.7678 
+  4.45919   32.2166 
+ 19.5114    21.9018 
+ 12.777     29.3537 
+ 18.1348    11.6092 
+  0.640994  14.6436 
+  3.39195   27.4398 </pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre>
+</pre></div>
+
+</div>
+</div>
+</div>
+
 </div><div style=display:none>
     
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span class="p">;</span><span class="n">ipython</span> <span class="n">nbconvert</span> <span class="o">--</span><span class="n">to</span> <span class="n">slides</span> <span class="n">wrkShpSlides2</span><span class="o">.</span><span class="n">ipynb</span>
@@ -297,7 +644,7 @@ Var(Y|Y>t) = V_Y[1 - i(i-s)]
 [NbConvertApp] Converting notebook wrkShpSlides2.ipynb to slides
 [NbConvertApp] Support files will be in wrkShpSlides2_files/
 [NbConvertApp] Loaded template slides_reveal.tpl
-[NbConvertApp] Writing 200364 bytes to wrkShpSlides2.slides.html
+[NbConvertApp] Writing 200372 bytes to wrkShpSlides2.slides.html
 </pre>
 </div>
 </div>
