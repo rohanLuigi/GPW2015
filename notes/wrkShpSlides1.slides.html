@@ -586,7 +586,7 @@ INFO: Use &#96;Pkg.update()&#96; to get the latest versions of your packages
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[62]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span class="k">using</span> <span class="n">Distributions</span>
@@ -594,7 +594,7 @@ INFO: Use &#96;Pkg.update()&#96; to get the latest versions of your packages
     <span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="n">ones</span><span class="p">(</span><span class="n">nObs</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="n">sample</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],(</span><span class="n">nObs</span><span class="p">,</span><span class="n">nLoci</span><span class="p">))]</span>
     <span class="n">b</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="n">bMean</span><span class="p">,</span><span class="n">bStd</span><span class="p">),</span><span class="n">size</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">X</span><span class="o">*</span><span class="n">b</span> <span class="o">+</span> <span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">resStd</span><span class="p">),</span><span class="n">nObs</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">X</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
 <span class="k">end</span>
 <span class="n">nObs</span>     <span class="o">=</span> <span class="mi">10</span>
 <span class="n">nLoci</span>    <span class="o">=</span> <span class="mi">5</span>
@@ -604,6 +604,7 @@ INFO: Use &#96;Pkg.update()&#96; to get the latest versions of your packages
 <span class="n">res</span> <span class="o">=</span> <span class="n">simDat</span><span class="p">(</span><span class="n">nObs</span><span class="p">,</span><span class="n">nLoci</span><span class="p">,</span><span class="n">bMean</span><span class="p">,</span><span class="n">bStd</span><span class="p">,</span><span class="n">resStd</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 <span class="n">X</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
 </pre></div>
 
 </div>
@@ -614,21 +615,58 @@ INFO: Use &#96;Pkg.update()&#96; to get the latest versions of your packages
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[8]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[62]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>6-element Array{Float64,1}:
+ -0.643881
+ -0.310628
+ -0.789057
+  0.749552
+ -0.214871
+ -0.56085 </pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+        </div><div class="fragment" data-fragment-index="9">
+        
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[64]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span class="n">X</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[64]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
 <pre>10x6 Array{Float64,2}:
- 1.0  1.0  0.0  2.0  2.0  1.0
- 1.0  2.0  0.0  2.0  0.0  2.0
- 1.0  2.0  1.0  0.0  0.0  0.0
- 1.0  0.0  1.0  1.0  1.0  1.0
- 1.0  2.0  1.0  1.0  2.0  1.0
- 1.0  2.0  1.0  1.0  0.0  0.0
- 1.0  1.0  1.0  0.0  0.0  0.0
- 1.0  1.0  2.0  2.0  0.0  0.0
- 1.0  0.0  0.0  2.0  0.0  0.0
- 1.0  1.0  2.0  0.0  0.0  2.0</pre>
+ 1.0  0.0  2.0  1.0  0.0  0.0
+ 1.0  1.0  2.0  0.0  1.0  1.0
+ 1.0  0.0  1.0  2.0  1.0  2.0
+ 1.0  1.0  2.0  1.0  0.0  2.0
+ 1.0  0.0  2.0  1.0  2.0  0.0
+ 1.0  2.0  0.0  1.0  1.0  1.0
+ 1.0  1.0  2.0  0.0  2.0  0.0
+ 1.0  2.0  2.0  2.0  0.0  0.0
+ 1.0  1.0  2.0  0.0  0.0  2.0
+ 1.0  0.0  0.0  2.0  2.0  2.0</pre>
 </div>
 
 </div>
@@ -1202,7 +1240,7 @@ phenotypic variance =    96.73
     
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[61]:</div>
+<div class="prompt input_prompt">In&nbsp;[65]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span class="p">;</span><span class="n">ipython</span> <span class="n">nbconvert</span> <span class="o">--</span><span class="n">to</span> <span class="n">slides</span> <span class="n">wrkShpSlides1</span><span class="o">.</span><span class="n">ipynb</span>
