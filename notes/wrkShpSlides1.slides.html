@@ -517,9 +517,7 @@ INFO: Use &#96;Pkg.update()&#96; to get the latest versions of your packages
 </div>
 
 </div>
-        </div></section>
-    </section><section>
-    <section>
+        </div><aside class="notes">
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -529,7 +527,8 @@ INFO: Use &#96;Pkg.update()&#96; to get the latest versions of your packages
 <h2 id="Simulate-phenotypic-values">Simulate phenotypic values<a class="anchor-link" href="#Simulate-phenotypic-values">&#182;</a></h2>
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="9">
+</div>
+    </aside><div class="fragment" data-fragment-index="9">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -651,6 +650,7 @@ INFO: Use &#96;Pkg.update()&#96; to get the latest versions of your packages
 <li>Simulate SNPs on chromosomes</li>
 <li>Random mating in finite population to generate LD</li>
 <li>Efficient algorithm for sampling sequence data</li>
+<li><a href="http://g3journal.org/content/early/2015/05/07/g3.115.016683.full.pdf+html">XSim paper</a></li>
 </ul>
 
 </div>
@@ -853,11 +853,356 @@ Sampling 500 animals into generation: 9
 </div>
 
 </div>
+        </div></section><section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Randomly-sample-QTL-positions">Randomly sample QTL positions<a class="anchor-link" href="#Randomly-sample-QTL-positions">&#182;</a></h2>
+</div>
+</div>
+</div><div class="fragment" data-fragment-index="9">
+        
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[55]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span class="n">k</span>      <span class="o">=</span> <span class="n">size</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">nQTL</span>   <span class="o">=</span> <span class="mi">50</span>
+<span class="n">QTLPos</span> <span class="o">=</span> <span class="n">sample</span><span class="p">([</span><span class="mi">1</span><span class="p">:</span><span class="n">k</span><span class="p">],</span><span class="n">nQTL</span><span class="p">,</span><span class="n">replace</span><span class="o">=</span><span class="n">false</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[55]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>50-element Array{Int64,1}:
+ 1419
+ 1252
+  611
+  744
+  713
+  298
+ 1848
+ 1971
+ 1380
+ 1190
+ 1804
+ 1877
+  435
+    ⋮
+ 1683
+  735
+ 1114
+  336
+ 1072
+  471
+ 1678
+   81
+  555
+  916
+   51
+ 1791</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+        </div></section><section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Marker-positions">Marker positions<a class="anchor-link" href="#Marker-positions">&#182;</a></h2>
+</div>
+</div>
+</div><div class="fragment" data-fragment-index="9">
+        
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[58]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span class="n">mrkPos</span> <span class="o">=</span> <span class="n">deleteat</span><span class="o">!</span><span class="p">([</span><span class="mi">1</span><span class="p">:</span><span class="n">k</span><span class="p">],</span><span class="n">sort</span><span class="p">(</span><span class="n">QTLPos</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[58]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>1950-element Array{Int64,1}:
+    1
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+   10
+   11
+   12
+   13
+   14
+    ⋮
+ 1989
+ 1990
+ 1991
+ 1992
+ 1993
+ 1994
+ 1995
+ 1996
+ 1997
+ 1998
+ 1999
+ 2000</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+        </div></section><section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="QTL-and-marker-matrices">QTL and marker matrices<a class="anchor-link" href="#QTL-and-marker-matrices">&#182;</a></h2>
+</div>
+</div>
+</div><div class="fragment" data-fragment-index="9">
+        
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span class="n">Q</span> <span class="o">=</span> <span class="n">M</span><span class="p">[:,</span><span class="n">QTLPos</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[23]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>500x50 Array{Int64,2}:
+ 2  0  2  2  1  0  1  1  2  1  2  0  1  …  2  2  1  0  1  2  2  2  1  1  1  0
+ 0  1  1  2  1  1  1  1  0  2  1  1  2     0  1  1  1  1  0  1  1  1  2  2  2
+ 1  0  1  2  1  0  0  1  1  0  2  0  2     1  1  1  2  1  0  1  2  1  0  2  0
+ 0  2  1  2  1  1  0  0  2  1  1  0  0     0  2  1  1  0  1  1  2  1  2  0  1
+ 1  1  0  1  0  1  2  2  1  0  1  2  1     1  2  0  0  1  1  2  2  1  1  0  2
+ 1  1  1  2  1  1  0  1  1  2  0  1  1  …  0  2  1  1  1  0  2  1  1  1  0  1
+ 1  0  0  1  1  1  0  1  0  0  0  0  0     1  2  2  2  0  1  2  1  0  0  2  1
+ 1  2  0  2  1  2  1  1  1  0  1  0  1     1  0  1  1  2  2  2  1  1  1  0  0
+ 2  0  0  0  0  1  1  1  0  1  1  1  0     1  0  1  2  0  2  1  2  1  1  1  0
+ 1  2  1  1  1  0  1  1  0  1  1  1  2     1  2  1  0  1  0  0  2  1  1  0  1
+ 1  2  0  1  1  2  1  0  1  1  1  1  1  …  1  0  0  1  1  1  1  2  1  0  2  0
+ 1  1  2  1  0  1  1  1  0  1  2  2  1     1  1  0  1  0  0  1  2  1  1  1  1
+ 1  2  0  0  1  1  1  1  0  1  1  1  1     0  1  2  1  1  1  2  1  1  1  1  1
+ ⋮              ⋮              ⋮        ⋱        ⋮              ⋮            
+ 1  1  1  1  1  0  0  1  1  2  1  0  0     0  0  1  1  2  1  1  1  1  2  1  2
+ 1  2  1  1  1  0  0  0  0  1  1  1  1     2  0  1  2  1  1  1  0  1  0  2  1
+ 1  2  1  1  2  0  0  0  0  2  2  1  2  …  1  1  1  0  1  1  1  2  2  2  0  2
+ 1  1  1  2  2  2  2  1  0  0  1  0  0     0  2  1  1  1  0  1  1  2  1  0  2
+ 0  0  0  2  1  1  0  1  1  1  0  2  1     2  1  0  2  0  2  1  2  0  1  0  1
+ 1  1  0  1  1  1  2  0  0  1  1  0  1     1  0  1  0  2  1  2  0  1  1  1  2
+ 1  2  0  1  1  0  0  0  2  0  0  2  1     1  1  1  2  1  1  1  2  1  1  1  2
+ 0  2  1  2  1  2  1  2  1  1  1  0  2  …  1  1  1  0  0  1  1  2  1  0  0  0
+ 2  1  1  2  2  1  0  1  0  1  1  1  1     0  1  1  2  1  1  0  2  0  1  2  2
+ 1  0  1  1  0  2  0  2  0  1  2  1  1     1  1  0  2  0  2  1  1  1  0  1  1
+ 2  1  2  2  1  1  0  1  2  0  2  0  0     0  1  2  2  1  1  0  0  0  1  1  1
+ 1  2  1  2  1  0  0  1  1  2  2  1  1     2  2  0  2  0  1  1  1  0  2  1  1</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+        </div><div class="fragment" data-fragment-index="9">
+        
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span class="n">X</span> <span class="o">=</span> <span class="n">M</span><span class="p">[:,</span><span class="n">mrkPos</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[24]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>500x1950 Array{Int64,2}:
+ 1  1  1  1  0  1  1  0  1  1  1  2  2  …  0  2  2  1  1  1  0  1  0  1  2  1
+ 2  0  1  0  1  2  1  1  2  0  0  2  1     1  2  0  0  1  0  1  1  1  0  0  2
+ 2  0  1  0  0  2  0  0  1  1  1  1  1     1  2  0  1  1  2  1  2  1  1  1  1
+ 1  0  1  0  1  1  1  2  2  0  0  2  0     1  0  2  0  1  2  2  1  1  0  1  1
+ 1  1  0  1  2  1  1  0  2  0  1  1  2     1  0  1  0  1  2  1  2  0  1  0  1
+ 2  0  2  1  1  1  2  2  1  1  0  1  1  …  1  1  2  2  1  1  0  1  1  1  0  0
+ 1  1  1  1  2  2  1  0  1  1  1  1  0     1  1  0  1  0  0  1  2  0  1  0  0
+ 1  2  1  2  0  2  1  1  2  2  0  0  1     1  2  2  1  1  1  1  1  1  1  1  2
+ 0  2  1  1  1  1  0  2  2  1  1  1  1     2  2  0  2  0  2  0  0  0  0  2  0
+ 0  1  1  0  2  2  0  2  1  1  1  0  2     1  1  0  0  1  2  2  1  1  2  0  1
+ 2  1  0  1  1  2  1  0  2  2  1  2  1  …  0  1  0  2  2  2  2  1  1  2  1  1
+ 0  2  1  1  2  1  1  2  2  0  0  0  1     2  0  1  1  1  1  1  0  2  0  1  1
+ 1  1  1  1  0  0  1  1  1  0  0  1  0     2  0  2  1  0  1  0  2  2  0  0  0
+ ⋮              ⋮              ⋮        ⋱        ⋮              ⋮            
+ 1  1  0  2  1  1  0  1  0  0  1  0  0     1  0  1  1  2  2  1  2  1  0  0  1
+ 2  1  1  1  2  2  2  0  1  1  2  1  1     1  2  0  1  2  1  2  2  0  1  1  2
+ 0  0  0  2  1  2  1  2  1  1  2  1  1  …  1  1  1  1  1  1  1  1  1  2  0  0
+ 1  0  1  0  1  1  0  1  2  0  2  1  1     0  0  1  2  0  1  1  0  1  1  1  2
+ 0  1  1  2  1  1  0  2  1  0  1  1  1     0  1  1  0  1  0  1  2  1  1  1  2
+ 0  2  2  1  0  2  2  2  2  1  1  1  1     1  0  1  1  1  0  2  1  1  0  2  1
+ 2  2  1  0  0  0  1  1  1  0  2  1  0     1  0  2  0  1  1  2  2  0  0  0  1
+ 0  1  0  0  1  1  1  2  1  2  1  2  1  …  0  1  1  2  1  1  1  1  2  2  1  1
+ 2  1  2  1  1  0  2  1  1  0  2  0  0     1  1  1  0  0  1  1  2  1  2  1  0
+ 1  1  2  0  1  1  1  0  2  1  0  2  0     1  0  0  2  0  0  0  1  0  0  0  1
+ 1  2  1  2  2  1  0  1  0  0  1  1  1     1  1  1  1  0  1  1  0  2  1  1  0
+ 1  2  1  1  2  0  1  1  1  1  0  0  1     2  0  0  2  0  1  2  1  1  2  2  0</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+        </div></section><section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Simulation-of-breeding-values-and-phenotypic-values">Simulation of breeding values and phenotypic values<a class="anchor-link" href="#Simulation-of-breeding-values-and-phenotypic-values">&#182;</a></h2>
+</div>
+</div>
+</div><div class="fragment" data-fragment-index="9">
+        
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[59]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span class="n">nQTL</span> <span class="o">=</span> <span class="n">size</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">nObs</span> <span class="o">=</span> <span class="n">size</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="err">α</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">nQTL</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">Q</span><span class="o">*</span><span class="err">α</span>
+<span class="c"># scaling breeding values to have variance 25.0</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">var</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">genVar</span> <span class="o">=</span> <span class="mf">25.0</span>
+<span class="n">a</span> <span class="o">*=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">genVar</span><span class="o">/</span><span class="n">v</span><span class="p">)</span>
+<span class="n">ans</span> <span class="o">=</span> <span class="n">var</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">println</span><span class="p">(</span><span class="s">&quot;genetic variance = &quot;</span><span class="p">,</span> <span class="n">ans</span><span class="p">)</span>
+<span class="c"># formatted printing</span>
+<span class="p">@</span><span class="n">printf</span> <span class="s">&quot;genetic variance = %8.2f  &quot;</span> <span class="n">ans</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>genetic variance = 25.0
+genetic variance =    25.00  </pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+        </div><div class="fragment" data-fragment-index="9">
+        
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[52]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span class="n">resVar</span> <span class="o">=</span> <span class="mf">75.0</span>
+<span class="n">resStd</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">resVar</span><span class="p">)</span>
+<span class="n">e</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">resStd</span><span class="p">),</span><span class="n">nObs</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">+</span> <span class="n">a</span> <span class="o">+</span> <span class="n">e</span>
+<span class="p">@</span><span class="n">printf</span> <span class="s">&quot;phenotypic mean     = %8.2f  </span><span class="se">\n</span><span class="s">&quot;</span> <span class="n">Base</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="p">@</span><span class="n">printf</span> <span class="s">&quot;phenotypic variance = %8.2f  </span><span class="se">\n</span><span class="s">&quot;</span> <span class="n">var</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>phenotypic mean     =   106.75  
+phenotypic variance =    96.73  
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
         </div><div style=display:none>
     
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[60]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span class="p">;</span><span class="n">ipython</span> <span class="n">nbconvert</span> <span class="o">--</span><span class="n">to</span> <span class="n">slides</span> <span class="n">wrkShpSlides1</span><span class="o">.</span><span class="n">ipynb</span>
@@ -877,7 +1222,7 @@ Sampling 500 animals into generation: 9
 [NbConvertApp] Converting notebook wrkShpSlides1.ipynb to slides
 [NbConvertApp] Support files will be in wrkShpSlides1_files/
 [NbConvertApp] Loaded template slides_reveal.tpl
-[NbConvertApp] Writing 225093 bytes to wrkShpSlides1.slides.html
+[NbConvertApp] Writing 239054 bytes to wrkShpSlides1.slides.html
 </pre>
 </div>
 </div>
